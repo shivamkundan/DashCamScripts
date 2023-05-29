@@ -1,6 +1,6 @@
 #!/bin/bash
 
-infolder="/Users/shivamkundan/Movies/Sep_6_trip/front" # NO slash at end
+infolder="/Users/shivamkundan/Movies/Drive_to_Gregs_May27/Front" # NO slash at end
 outfolder=$infolder
 
 GPS_OUTFILE="$outfolder/extracted.gps"
