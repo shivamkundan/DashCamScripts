@@ -8,13 +8,14 @@ import openpyxl
 # (lat, long)	   [RMC]
 # speed kts -> mph [RMC]
 # true heading (?) [RMC]
-
 # num satellites   [GSV]
+
 # HDOP,VDOP,PDOP   [GSA]
 
 # ==== calc these ==== #
-# start time
-# end time
+# trip start time
+# gps sig start time
+# trip end time
 # total trip time
 # total driving time
 # total stopping/waiting time
@@ -31,7 +32,7 @@ import openpyxl
 # 3    00042.25  Current longitude
 # 4    W         East/West
 # 5    *75       checksum
-GPGLL_headers=["epoch","code","latitude","N/S","longitude","E/W","timestamp","validity","Checksum"]
+GPGLL_headers=["epoch","code","latitude","N/S","longitude","E/W","timestamp","validity","","Checksum"]
 
 # ----------------------------------------------------------------------------------------------------
 # GPRMC
@@ -73,7 +74,7 @@ GPGLL_headers=["epoch","code","latitude","N/S","longitude","E/W","timestamp","va
 # The checksum validation value (in hexadecimal)
 
 GPRMC_headers=["epoch","code","timestamp","validity","latitude","N/S","longitude","E/W",\
-				"Speed (kts)","Heading","Date Stamp","Mag Variation","Mag Variation Dir","Checksum"]
+				"Speed (kts)","Heading","Date Stamp","Mag Variation","Mag Variation Dir","valid?","Checksum"]
 
 # ----------------------------------------------------------------------------------------------------
 # GPVTG
@@ -109,7 +110,7 @@ GPVTG_headers=["epoch","code","True track made good"," Magnetic track made good"
 # The satellite number, elevation, azimuth, and signal to noise ratio for each satellite
 # The checksum validation value (in hexadecimal)
 
-GPGSV_headers=["epoch","code","#MSGS","MSG_NUM","#SVs","SV PRN#","ELV","AZM","SNR","","","","","","","","","","","",""]
+GPGSV_headers=["epoch","code","#MSGS","MSG_NUM","#SVs","SV PRN#","ELV","AZM","SNR","","","","","","","","","","","","",""]
 
 
 # ----------------------------------------------------------------------------------------------------
@@ -137,7 +138,9 @@ def print_summary(NMEA_codes_dict):
 		# for item in NMEA_codes_dict[code]:
 		# 	print (item)
 		# print()
-
+def convert_coords_dms_to_decimal(lat,long):
+	# Decimal Degrees = degrees + (minutes/60) + (seconds/3600)
+	pass
 # ==================================================================================================== #
 # ==================================================================================================== #
 
@@ -166,7 +169,7 @@ if __name__=="__main__":
 	# *	0x2a	42	Checksum delimiter
 	# ,	0x2c	44	Field delimiter
 	for line in inlist:
-		l=line.replace("$",",").replace("[","").replace("]","").replace("\n","")
+		l=line.replace("$",",").replace("*",",").replace("[","").replace("]","").replace("\n","")
 		l=l.split(",")
 		l[0]=l[0].replace("gps","").replace(" ","")
 
@@ -205,7 +208,14 @@ if __name__=="__main__":
 	# df1.merge(df2, left_on='objectdesc', right_on='objdescription')[['Content', 'objectdesc', 'TS_id', 'idname']]
 
 
-	df_3 = df_GPRMC.merge(df_GPGSV[['epoch', '#SVs']], left_on='epoch',right_on='epoch',how="outer")#.drop('epoch', axis='columns')
+	df_3 = df_GPRMC.merge(df_GPGSV[['epoch', '#SVs']], left_on='epoch',right_on='epoch',how="outer").drop(["code","timestamp","N/S","E/W","Date Stamp","Speed (kts)","Mag Variation","Mag Variation Dir","valid?","Checksum"], axis='columns')
+
+
+	df_3["Speed (kts)"]=df_GPRMC["Speed (kts)"]
+	df_3["Speed (MPH)"]=df_GPRMC["Speed (kts)"]*1.151
+	df_3["Speed (MPH)"]=df_3["Speed (MPH)"].round(decimals=1)
+	# df_3["#SVs"]=df_3["#SVs"].multiply(1, fill_value=0)
+
 
 	# Convert from unix epoch to readable date time
 	for df in [df_GPRMC,df_GPGLL,df_GPGSV,df_3]:
@@ -213,11 +223,29 @@ if __name__=="__main__":
 		df["epoch"]=pd.to_datetime(df["epoch"], errors="raise", unit="ms", origin="unix")
 		# except:
 
-	# create a excel writer object
-	with pd.ExcelWriter(outfile) as writer:
-		df_GPRMC.to_excel(writer, sheet_name="GPRMC", index=False)
-		df_GPGLL.to_excel(writer, sheet_name="GPGLL", index=False)
-		df_GPVTG.to_excel(writer, sheet_name="GPVTG", index=False)
-		df_GPGSV.to_excel(writer, sheet_name="GPGSV", index=False)
-		df_GPGSA.to_excel(writer, sheet_name="GPGSA", index=False)
-		df_3.to_excel(writer, sheet_name="df_3", index=False)
+	# # create a excel writer object
+	# with pd.ExcelWriter(outfile) as writer:
+	# 	df_GPRMC.to_excel(writer, sheet_name="GPRMC", index=False)
+	# 	df_GPGLL.to_excel(writer, sheet_name="GPGLL", index=False)
+	# 	df_GPVTG.to_excel(writer, sheet_name="GPVTG", index=False)
+	# 	df_GPGSV.to_excel(writer, sheet_name="GPGSV", index=False)
+	# 	df_GPGSA.to_excel(writer, sheet_name="GPGSA", index=False)
+	# 	df_3.to_excel(writer, sheet_name="Summary", index=False)
+
+
+	lat=df_GPGLL["latitude_adj"]
+	lon=df_GPGLL["longitude_adj"]
+
+	print (len(lat))
+
+
+	for i in range (1,len(lat)):
+		lat1=lat[i]
+		lat2=lat[i-1]
+
+		lon1=lon[i]
+		lon2=lon[i-1]
+
+		print (f"({lat2},{lon2}) - ({lat1},{lon1})")
+	# for item in x:
+	# 	print (item)
