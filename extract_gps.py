@@ -1,6 +1,14 @@
 #!/usr/local/opt/python@3.9/libexec/bin/python
 import pandas as pd
-import openpyxl
+# import openpyxl
+import os
+
+
+# Google Roads API key AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+# https://developers.google.com/maps/documentation/roads/speed-limits
+# https://wcedmisten.fyi/post/dashcam-to-speed-limits/
+# https://github.com/wcedmisten/piofo  -- cool
+
 
 # need:
 # valid bit        [RMC]
@@ -144,8 +152,19 @@ def convert_coords_dms_to_decimal(lat,long):
 # ==================================================================================================== #
 # ==================================================================================================== #
 
-outfile="gps_data.xlsx"
-infile="out.txt"
+directory="/Users/shivamkundan/Developer/MoviePy_Test/front/"
+intermediate_file=directory+"out.txt"
+vid_file=directory+"20230528_191912_NF.mp4"
+
+# Initial conversion to strings
+print ("extracting strings...")
+os.system(f"strings {vid_file} | grep -e GPRMC -e GPVTG -e GPGSA -e GPGSV -e GPGLL > {intermediate_file}")
+
+# ==================================================================================================== #
+# ==================================================================================================== #
+
+outfile=directory+"gps_data.xlsx"
+infile=intermediate_file
 
 # Main data struct
 NMEA_codes_dict={"GPRMC":[],
@@ -205,16 +224,13 @@ if __name__=="__main__":
 	df_GPGSV["MSG_NUM"]=pd.to_numeric(df_GPGSV["MSG_NUM"])
 
 
-	# df1.merge(df2, left_on='objectdesc', right_on='objdescription')[['Content', 'objectdesc', 'TS_id', 'idname']]
-
-
 	df_3 = df_GPRMC.merge(df_GPGSV[['epoch', '#SVs']], left_on='epoch',right_on='epoch',how="outer").drop(["code","timestamp","N/S","E/W","Date Stamp","Speed (kts)","Mag Variation","Mag Variation Dir","valid?","Checksum"], axis='columns')
 
-
-	df_3["Speed (kts)"]=df_GPRMC["Speed (kts)"]
-	df_3["Speed (MPH)"]=df_GPRMC["Speed (kts)"]*1.151
-	df_3["Speed (MPH)"]=df_3["Speed (MPH)"].round(decimals=1)
-	# df_3["#SVs"]=df_3["#SVs"].multiply(1, fill_value=0)
+	# Convert, round, and truncate
+	spd_mph=[]
+	for item in list((df_GPRMC["Speed (kts)"]*1.151).round(decimals=0)):
+		spd_mph.append(int(item))
+	df_3["Speed (MPH)"]=pd.Series(spd_mph)
 
 
 	# Convert from unix epoch to readable date time
@@ -223,29 +239,29 @@ if __name__=="__main__":
 		df["epoch"]=pd.to_datetime(df["epoch"], errors="raise", unit="ms", origin="unix")
 		# except:
 
-	# # create a excel writer object
-	# with pd.ExcelWriter(outfile) as writer:
-	# 	df_GPRMC.to_excel(writer, sheet_name="GPRMC", index=False)
-	# 	df_GPGLL.to_excel(writer, sheet_name="GPGLL", index=False)
-	# 	df_GPVTG.to_excel(writer, sheet_name="GPVTG", index=False)
-	# 	df_GPGSV.to_excel(writer, sheet_name="GPGSV", index=False)
-	# 	df_GPGSA.to_excel(writer, sheet_name="GPGSA", index=False)
-	# 	df_3.to_excel(writer, sheet_name="Summary", index=False)
+	# create a excel writer object
+	with pd.ExcelWriter(outfile) as writer:
+		df_GPRMC.to_excel(writer, sheet_name="GPRMC", index=False)
+		df_GPGLL.to_excel(writer, sheet_name="GPGLL", index=False)
+		df_GPVTG.to_excel(writer, sheet_name="GPVTG", index=False)
+		df_GPGSV.to_excel(writer, sheet_name="GPGSV", index=False)
+		df_GPGSA.to_excel(writer, sheet_name="GPGSA", index=False)
+		df_3.to_excel(writer, sheet_name="Summary", index=False)
 
 
-	lat=df_GPGLL["latitude_adj"]
-	lon=df_GPGLL["longitude_adj"]
+	# lat=df_GPGLL["latitude_adj"]
+	# lon=df_GPGLL["longitude_adj"]
 
-	print (len(lat))
+	# print (len(lat))
 
 
-	for i in range (1,len(lat)):
-		lat1=lat[i]
-		lat2=lat[i-1]
+	# for i in range (1,len(lat)):
+	# 	lat1=lat[i]
+	# 	lat2=lat[i-1]
 
-		lon1=lon[i]
-		lon2=lon[i-1]
+	# 	lon1=lon[i]
+	# 	lon2=lon[i-1]
 
-		print (f"({lat2},{lon2}) - ({lat1},{lon1})")
-	# for item in x:
-	# 	print (item)
+	# 	print (f"({lat2},{lon2}) - ({lat1},{lon1})")
+	# # for item in x:
+	# # 	print (item)
