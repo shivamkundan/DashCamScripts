@@ -5,6 +5,7 @@
 # http://aprs.gids.nl/nmea/
 # https://exiftool.org/forum/index.php?topic=10058.0
 # https://github.com/bartbroere/blackvue-acc
+# https://en.wikipedia.org/wiki/NMEA_0183
 # ====================================================================== #
 
 infolder="/Users/shivamkundan/Movies/Drive_to_Stews_May28/Front" # NO slash at end
