@@ -31,7 +31,7 @@ import os
 
 
 
-# Draw paths:
+# ---- Draw paths (google) ---- #
 # https://maps.googleapis.com/maps/api/staticmap?center=40.776676,-73.971321&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY&path=color:0xff0000ff|weight:5|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397
 
 # https://maps.googleapis.com/maps/api/staticmap?center=37.81461111,-89.06629028
@@ -39,6 +39,11 @@ import os
 # &size=600x600
 # &key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
 # &path=color:0xff0000ff|weight:5|37.71893333,-89.21577222|37.91028889,-88.91680833
+
+
+# ---- Elevation (free) ---- #
+# https://api.opentopodata.org/v1/eudem25m?locations=51.875127,-3.341298
+# curl https://api.opentopodata.org/v1/test-dataset?locations=37.72024021471334,-89.2162186017107
 
 
 # ==================================================================================================== #
