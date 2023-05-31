@@ -1,0 +1,39 @@
+
+  
+https://maps.googleapis.com/maps/api/staticmap?center=37.7204366492096,-89.2170522951428&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+
+
+# ================================================
+https://maps.googleapis.com/maps/api/staticmap?center=40.776676,-73.971321&zoom=12&size=600x600
+&path=color:0xff0000ff|weight:5|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397
+&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+# --------
+https://maps.googleapis.com/maps/api/staticmap?center=37.81461111,-89.06629028
+&zoom=11
+&size=600x600
+&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+&path=color:0xff0000ff|weight:5|37.71893333,-89.21577222|37.91028889,-88.91680833
+
+# ================================================
+
+https://maps.googleapis.com/maps/api/staticmap?center=Williamsburg,Brooklyn,NY&zoom=13&size=400x400&
+markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+https://maps.googleapis.com/maps/api/staticmap?center=63.259591,-144.667969&zoom=6&size=400x400
+&markers=color:blue%7Clabel:S%7C62.107733,-145.541936&markers=size:tiny%7Ccolor:green%7CDelta+Junction,AK
+&markers=size:mid%7Ccolor:0xFFFF00%7Clabel:C%7CTok,AK"&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+path=color:0x0000ff|weight:5|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397
+
+#================================================
+https://developers.google.com/maps/documentation/maps-static/start
+
+https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+
+https://maps.googleapis.com/maps/api/staticmap
+?size=400x400&center=59.900503,-135.478011&zoom=4
+&path=weight:5%7Ccolor:red%7Cenc:_fisIp~u%7CU}%7Ca@pytA_~b@hhCyhS~hResU%7C%7Cx@oig@rwg@amUfbjA}f[roaAynd@%7CvXxiAt{ZwdUfbjAewYrqGchH~vXkqnAria@c_o@inc@k{g@i`]o%7CF}vXaj\h`]ovs@?yi_@rcAgtO%7Cj_AyaJren@nzQrst@zuYh`]v%7CGbldEuzd@%7C%7Cx@spD%7CtrAzwP%7Cd_@yiB~vXmlWhdPez\_{Km_`@~re@ew^rcAeu_@zhyByjPrst@ttGren@aeNhoFemKrvdAuvVidPwbVr~j@or@f_z@ftHr{ZlwBrvdAmtHrmT{rOt{Zz}E%7Cc%7C@o%7CLpn~AgfRpxqBfoVz_iAocAhrVjr@rh~@jzKhjp@``NrfQpcHrb^k%7CDh_z@nwB%7Ckb@a{R%7Cyh@uyZ%7CllByuZpzw@wbd@rh~@%7C%7CFhqs@teTztrAupHhyY}t]huf@e%7CFria@o}GfezAkdW%7C}[ocMt_Neq@ren@e~Ika@pgE%7Ci%7CAfiQ%7C`l@uoJrvdAgq@fppAsjGhg`@%7ChQpg{Ai_V%7C%7Cx@mkHhyYsdP%7CxeA~gF%7C}[mv`@t_NitSfjp@c}Mhg`@sbChyYq}e@rwg@atFff}@ghN~zKybk@fl}A}cPftcAite@tmT__Lha@u~DrfQi}MhkSqyWivIumCria@ciO_tHifm@fl}A{rc@fbjAqvg@rrqAcjCf%7Ci@mqJtb^s%7C@fbjA{wDfs`BmvEfqs@umWt_Nwn^pen@qiBr`xAcvMr{Zidg@dtjDkbM%7Cd_@
+&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+

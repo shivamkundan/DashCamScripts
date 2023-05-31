@@ -9,7 +9,39 @@ import os
 # https://wcedmisten.fyi/post/dashcam-to-speed-limits/
 # https://github.com/wcedmisten/piofo  -- cool
 
+  # https://maps.googleapis.com/maps/api/elevation/json
+  # ?locations=39.7391536%2C-104.9847034
+  # &key=YOUR_API_KEY
+# https://maps.googleapis.com/maps/api/elevation/json?locations=37.7204366492096%2C-89.2170522951428&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
 
+ # https://maps.googleapis.com/maps/api/timezone/json
+ #    ?location=37.7204366492096%2C-89.2170522951428
+ #    &timestamp=1331161200
+ #    &key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+
+
+# https://developers.google.com/maps/documentation/maps-static/start
+
+ # https://maps.googleapis.com/maps/api/staticmap?center=Carbondale,IL&zoom=14&size=400x400&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+ # https://maps.googleapis.com/maps/api/staticmap?center=37.7204366492096,-89.2170522951428&format=jpeg&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+# https://maps.googleapis.com/maps/api/staticmap?center=37.7204366492096,-89.2170522951428&scale=2&format=jpeg&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+# https://maps.googleapis.com/maps/api/staticmap?center=37.7204366492096,-89.2170522951428&maptype=hybrid&scale=2&format=jpeg&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+
+
+
+# Draw paths:
+# https://maps.googleapis.com/maps/api/staticmap?center=40.776676,-73.971321&zoom=12&size=800x800&key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY&path=color:0xff0000ff|weight:5|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397
+
+# https://maps.googleapis.com/maps/api/staticmap?center=37.81461111,-89.06629028
+# &zoom=11
+# &size=600x600
+# &key=AIzaSyDWfgw7VvZqrMW0neLvY0e7u5qOgxZL6uY
+# &path=color:0xff0000ff|weight:5|37.71893333,-89.21577222|37.91028889,-88.91680833
+
+
+# ==================================================================================================== #
 # need:
 # valid bit        [RMC]
 # epoch/Timestamp  [RMC]
@@ -30,6 +62,8 @@ import os
 # distance traveled -> calc from (lat, long)
 # num of stops
 # avg/median/min/max time stopped
+
+# trip_info.txt
 
 # ==================================================================================================== #
 # ==================================================================================================== #
