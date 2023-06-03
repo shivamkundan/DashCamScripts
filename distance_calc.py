@@ -1,4 +1,4 @@
-#!/usr/local/opt/python@3.9/libexec/bin/python
+#!/usr/local/bin/python3
 from math import sin, cos, sqrt, atan2, radians
 
 
