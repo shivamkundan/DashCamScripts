@@ -25,6 +25,17 @@ warnings.filterwarnings("ignore")
 
 from distance_calc import calc_distance
 
+import datetime
+
+
+
+TZ_DIFF=-5*3600 # time difference in seconds from UTC
+
+epoch = datetime.datetime(2023, 5, 28, 6, 42, 33).strftime('%s')
+
+print(epoch)
+
+exit()
 
 # ============================================= #
 def get_bearing(lat1,lon1,lat2,lon2):
@@ -107,42 +118,87 @@ create_report(gpx_file)
 
 # ----- Make dataframe from raw data ----- #
 segment = gpx_file.tracks[0].segments[0]
+
+print (segment)
+
+
+print (dir(segment))
+
+
+
+# d1 = mod_datetime.timedelta(-1, -1)
+d2 = datetime.timedelta(0, TZ_DIFF)  #UTC-6 for chicago
+# # move back and forward to add a total of 1 second
+# segment.adjust_time(d1)
+segment.adjust_time(d2)
+
+
+
+
 coords = pd.DataFrame([
         {'lat': p.latitude,
          'lon': p.longitude,
          'speed': p.speed,
          'time': p.time} for p in segment.points])
-coords.set_index('time', drop=True, inplace=True)
+coords.set_index('time', drop=True, inplace=False)
 coords["speed"]=coords["speed"]*2.237
 
-
+cumulative_dist=0
 # ----- Calculate compass headings ----- #
 total_len=len(coords['lon'])
+
 coords["heading"]=pd.Series([-1 for i in range(0,total_len)])
+coords["cum_dist"]=pd.Series([-1 for i in range(0,total_len)])
+coords["cum_dist_pct"]=pd.Series([-1 for i in range(0,total_len)])
+
+# coords["Hour"]=pd.Series([-1 for i in range(0,total_len)])
+# coords["Minute"]=pd.Series([-1 for i in range(0,total_len)])
+# coords["Second"]=pd.Series([-1 for i in range(0,total_len)])
+# coords["AM_PM"]=pd.Series([-1 for i in range(0,total_len)])
+
+
+coords["time_str"]=pd.Series([-1 for i in range(0,total_len)])
+coords["date_str"]=pd.Series([-1 for i in range(0,total_len)])
+
+
+L=(gpx_file.length_2d() / 1000.)/1.609
+# L=float(format_long_length())
+
+# https://www.programiz.com/python-programming/datetime/strftime
 for i in range(1,total_len):
     C1=(coords['lat'][i-1],coords['lon'][i-1])
     C2=(coords['lat'][i],coords['lon'][i])
 
-    head=get_bearing(C1[0], C1[1], C2[0], C2[1])
+    head=round(get_bearing(C1[0], C1[1], C2[0], C2[1]),2)
+    dist=calc_distance(C2,C1)/1609    # division to convert to miles-per-hour
+    cumulative_dist+=dist
+
+
+    pct=100*(cumulative_dist/L)
+
+
     coords["heading"][i]=head
+    coords["cum_dist"][i]=round(cumulative_dist,2)
+    coords["cum_dist_pct"][i]=round(pct,2)
+
+
+
+    coords["time_str"][i]=coords["time"][i].strftime("%I:%M:%S %p")
+    coords["date_str"][i]=coords["time"][i].strftime("%a, %h %d %Y")
+
+
 
 print (coords)
 
+# ----- Write to CSV ----- #
+coords.to_csv("ouput.csv")
 
+exit()
 
-
-# # ----- Write to CSV ----- #
-# coords.to_csv("ouput.csv")
-
-# exit()
-
-verts = [[-1, -1], [1, -1], [1, 1], [-1, -1]]
 
 # ----- Plot the track and position markers ----- #
 
 marker_path, attributes = svg2paths('up_arrow.svg')
-
-
 
 
 i=0

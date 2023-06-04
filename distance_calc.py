@@ -20,10 +20,11 @@ def calc_distance(point2,point1):
 	c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
 	# Approximate radius of earth in km
-	R = 6373.0
+	R = 6373.0*1000
 	distance = R * c
 
-	print("Result: ", distance,"km")
+	# print("Result: ", distance,"m")
+	return distance
 	# print("Should be: ", 278.546, "km")
 
 if __name__ == '__main__':
