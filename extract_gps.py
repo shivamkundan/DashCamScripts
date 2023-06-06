@@ -193,14 +193,17 @@ def convert_coords_dms_to_decimal(lat,long):
 
 directory="/Users/shivamkundan/Developer/MoviePy_Test/front/"
 intermediate_file=directory+"out.txt"
-vid_file=directory+"20230528_191912_NF.mp4"
+vid_file=directory+"*F.mp4"
 
 # Initial conversion to strings
 print ("extracting strings...")
 os.system(f"strings {vid_file} | grep -e GPRMC -e GPVTG -e GPGSA -e GPGSV -e GPGLL > {intermediate_file}")
 
+
+exit()
 # ==================================================================================================== #
 # ==================================================================================================== #
+
 
 outfile=directory+"gps_data.xlsx"
 infile=intermediate_file
